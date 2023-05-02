@@ -261,8 +261,7 @@
 
 // export default reducer;
 
-
-import {DISPLAY_ALERT, CLEAR_ALERT} from './actions'
+import {DISPLAY_ALERT, CLEAR_ALERT,REGISTER_USER_BEGIN,REGISTER_USER_SUCCESS,REGISTER_USER_ERROR} from './actions'
 const reducer =(state, action)=>{
   if (action.type===DISPLAY_ALERT){
     return {
@@ -279,6 +278,30 @@ const reducer =(state, action)=>{
       alertType:'',
  alertText:'', 
    }
+  }
+  if(action.type===REGISTER_USER_BEGIN){
+    return {...state, isLoading:true}
+  }
+  if(action.type===REGISTER_USER_SUCCESS){
+    return {...state,
+       isLoading:false,
+       token:action.payload.token,
+       user:action.payload.user,
+      userLocation:action.payload.location,
+    jobLocation:action.payload.location,
+    ShowAlert:true,
+    alertType:'success',
+    alertText:'User Created! Redirecting...',
+  }
+  } 
+  if(action.type===REGISTER_USER_ERROR){
+    return {...state,
+       isLoading:false,
+      
+    ShowAlert:true,
+    alertType:'success',
+    alertText:action.payload.msg,
+  }
   }
   throw new Error('no such action: ${action.type}')
 }
